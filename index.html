@@ -39,24 +39,25 @@
     <div class="form-group"><label>Trust Score (0-10)</label><input type="number" step="0.1" id="trustScore" placeholder="9.5" required></div>
     
     <div class="section-title">Pricing & Discounts</div>
-    <div class="form-group"><label>Base Price ($100K)</label><input type="number" id="basePrice" placeholder="500" required></div>
+    <div class="form-group"><label>Account Size</label><input type="text" id="accountSize" placeholder="e.g. 100K" required></div>
+    <div class="form-group"><label>Base Price</label><input type="number" id="basePrice" placeholder="500" required></div>
     <div class="form-group"><label>Discounted Price</label><input type="number" id="discountPrice" placeholder="450" required></div>
     <div class="form-group"><label>Discount Code</label><input type="text" id="discountCode" placeholder="NIGHT10" required></div>
-    <div class="form-group"><label>Affiliate Link</label><input type="url" id="affiliateLink" placeholder="https://..." required></div>
+    <div class="form-group" style="grid-column: 1 / -1;"><label>Affiliate Link</label><input type="url" id="affiliateLink" placeholder="https://..." required></div>
 
     <div class="section-title">Algorithm Filters</div>
     <div class="form-group"><label>Platforms</label><input type="text" id="platforms" placeholder="mt5 dxtrade" required></div>
     <div class="form-group">
       <label>Phases</label>
-      <select id="phases"><option value="1">1-Step</option><option value="2">2-Step</option><option value="instant">Instant</option></select>
+      <select id="phases"><option value="1">1-Step</option><option value="2" selected>2-Step</option><option value="instant">Instant</option></select>
     </div>
     <div class="form-group">
       <label>Drawdown Type</label>
-      <select id="ddType"><option value="static">Static</option><option value="trailing">Trailing</option></select>
+      <select id="ddType"><option value="static">Static</option><option value="trailing" selected>Trailing</option></select>
     </div>
     <div class="form-group">
       <label>US Allowed?</label>
-      <select id="usAllowed"><option value="false">No</option><option value="true">Yes</option></select>
+      <select id="usAllowed"><option value="false" selected>No</option><option value="true">Yes</option></select>
     </div>
 
     <div class="section-title">Metrics</div>
@@ -64,8 +65,8 @@
     <div class="form-group"><label>Max Drawdown</label><input type="text" id="maxDD" placeholder="10%" required></div>
     <div class="form-group"><label>Daily Loss</label><input type="text" id="dailyLoss" placeholder="5%" required></div>
     <div class="form-group"><label>Profit Split (Decimal)</label><input type="number" step="0.01" id="splitRatio" placeholder="0.90" required></div>
-    <div class="form-group"><label>News Allowed</label><select id="newsAllowed"><option value="true">Yes</option><option value="false">No</option></select></div>
-    <div class="form-group"><label>EAs Allowed</label><select id="eaAllowed"><option value="true">Yes</option><option value="false">No</option></select></div>
+    <div class="form-group"><label>News Allowed</label><select id="newsAllowed"><option value="true" selected>Yes</option><option value="false">No</option></select></div>
+    <div class="form-group"><label>EAs Allowed</label><select id="eaAllowed"><option value="true" selected>Yes</option><option value="false">No</option></select></div>
 
     <button type="submit" class="btn-submit">Deploy to Matrix</button>
   </form>
@@ -75,8 +76,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
   import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-  // YAHAN APNA FIREBASE WEB CONFIG PASTE KAREIN
- const firebaseConfig = {
+  const firebaseConfig = {
   apiKey: "AIzaSyBa8Cs7QnPaBBxc9hANEqeBC6KKzLxk168",
   authDomain: "night-trader-admin.firebaseapp.com",
   projectId: "night-trader-admin",
@@ -96,15 +96,25 @@
     btn.innerText = "Deploying...";
 
     const data = {
-      name: document.getElementById('firmName').value, logo: document.getElementById('logoUrl').value,
-      categories: document.getElementById('categories').value.toLowerCase(), trustScore: parseFloat(document.getElementById('trustScore').value),
-      basePrice: parseFloat(document.getElementById('basePrice').value), discountPrice: parseFloat(document.getElementById('discountPrice').value),
-      discountCode: document.getElementById('discountCode').value, affiliateLink: document.getElementById('affiliateLink').value,
-      platforms: document.getElementById('platforms').value.toLowerCase(), phases: document.getElementById('phases').value,
-      ddType: document.getElementById('ddType').value, usAllowed: document.getElementById('usAllowed').value,
-      profitTarget: document.getElementById('profitTarget').value, maxDD: document.getElementById('maxDD').value,
-      dailyLoss: document.getElementById('dailyLoss').value, splitRatio: parseFloat(document.getElementById('splitRatio').value),
-      newsAllowed: document.getElementById('newsAllowed').value, eaAllowed: document.getElementById('eaAllowed').value,
+      name: document.getElementById('firmName').value, 
+      logo: document.getElementById('logoUrl').value,
+      categories: document.getElementById('categories').value.toLowerCase(), 
+      trustScore: parseFloat(document.getElementById('trustScore').value),
+      accountSize: document.getElementById('accountSize').value.toUpperCase(),
+      basePrice: parseFloat(document.getElementById('basePrice').value), 
+      discountPrice: parseFloat(document.getElementById('discountPrice').value),
+      discountCode: document.getElementById('discountCode').value, 
+      affiliateLink: document.getElementById('affiliateLink').value,
+      platforms: document.getElementById('platforms').value.toLowerCase(), 
+      phases: document.getElementById('phases').value,
+      ddType: document.getElementById('ddType').value, 
+      usAllowed: document.getElementById('usAllowed').value,
+      profitTarget: document.getElementById('profitTarget').value, 
+      maxDD: document.getElementById('maxDD').value,
+      dailyLoss: document.getElementById('dailyLoss').value, 
+      splitRatio: parseFloat(document.getElementById('splitRatio').value),
+      newsAllowed: document.getElementById('newsAllowed').value, 
+      eaAllowed: document.getElementById('eaAllowed').value,
       timestamp: Date.now()
     };
 
