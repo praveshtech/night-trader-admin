@@ -1,37 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Portal — Night Trader</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg-base: #030712; --bg-surface: rgba(15, 23, 42, 0.8);
-  --border-dim: rgba(255, 255, 255, 0.1); --accent-cyan: #38BDF8;
-  --status-success: #10B981; --text-main: #F8FAFC; --text-muted: #94A3B8;
-}
-body { background: var(--bg-base); color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; padding: 40px 20px; }
-.admin-container { max-width: 900px; margin: 0 auto; background: var(--bg-surface); border: 1px solid var(--border-dim); border-radius: 16px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-.header { text-align: center; margin-bottom: 40px; }
-.header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 32px; color: var(--accent-cyan); margin-bottom: 8px; }
-.header p { color: var(--text-muted); font-size: 14px; }
-
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.form-group { display: flex; flex-direction: column; gap: 8px; }
-.form-group.full-width { grid-column: 1 / -1; }
-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
-input, select { background: rgba(0,0,0,0.3); border: 1px solid var(--border-dim); padding: 12px 16px; border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; transition: 0.3s; }
-input:focus, select:focus { border-color: var(--accent-cyan); outline: none; }
-
-.section-title { grid-column: 1 / -1; font-family: 'Space Grotesk', sans-serif; font-size: 20px; margin-top: 20px; border-bottom: 1px solid var(--border-dim); padding-bottom: 10px; color: var(--text-main); }
-
-.btn-submit { background: var(--accent-cyan); color: #000; border: none; padding: 16px; border-radius: 8px; font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 30px; width: 100%; text-transform: uppercase; }
-.btn-submit:hover { box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); transform: translateY(-2px); }
-
-#notification { display: none; padding: 16px; border-radius: 8px; text-align: center; font-weight: 600; margin-bottom: 20px; }
-.notify-success { background: rgba(16, 185, 129, 0.2); color: var(--status-success); border: 1px solid var(--status-success); }
-.notify-error { background: rgba(239, 68, 68, 0.2); color: #EF4444; border: 1px solid #EF4444; }
+  :root { --bg-base: #030712; --bg-surface: rgba(15, 23, 42, 0.8); --border-dim: rgba(255, 255, 255, 0.1); --accent-cyan: #38BDF8; --text-main: #F8FAFC; --text-muted: #94A3B8; }
+  body { background: var(--bg-base); color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; padding: 40px 20px; }
+  .admin-container { max-width: 900px; margin: 0 auto; background: var(--bg-surface); border: 1px solid var(--border-dim); border-radius: 16px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+  .header { text-align: center; margin-bottom: 40px; }
+  .header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 32px; color: var(--accent-cyan); margin-bottom: 8px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  label { font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); }
+  input, select { background: rgba(0,0,0,0.3); border: 1px solid var(--border-dim); padding: 12px 16px; border-radius: 8px; color: #fff; outline: none; transition: 0.3s; }
+  input:focus, select:focus { border-color: var(--accent-cyan); }
+  .section-title { grid-column: 1 / -1; font-family: 'Space Grotesk', sans-serif; font-size: 20px; margin-top: 20px; border-bottom: 1px solid var(--border-dim); padding-bottom: 10px; }
+  .btn-submit { background: var(--accent-cyan); color: #000; border: none; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 30px; grid-column: 1 / -1; }
+  .btn-submit:hover { box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); transform: translateY(-2px); }
+  #notification { display: none; padding: 16px; border-radius: 8px; text-align: center; font-weight: 600; margin-bottom: 20px; }
 </style>
 </head>
 <body>
@@ -41,180 +29,96 @@ input:focus, select:focus { border-color: var(--accent-cyan); outline: none; }
     <h1>Initialize Prop Firm</h1>
     <p>Push verified firm data directly to the Firestore Matrix</p>
   </div>
-
   <div id="notification"></div>
 
   <form id="addFirmForm" class="form-grid">
-    <!-- BASIC INFO -->
     <div class="section-title">Basic Information</div>
-    <div class="form-group">
-      <label>Firm Name</label>
-      <input type="text" id="firmName" placeholder="e.g. FTMO" required>
-    </div>
-    <div class="form-group">
-      <label>Logo Image URL</label>
-      <input type="text" id="logoUrl" placeholder="e.g. https://domain.com/ftmo.png" required>
-    </div>
-    <div class="form-group">
-      <label>Categories (Space separated)</label>
-      <input type="text" id="categories" placeholder="e.g. forex futures instant" required>
-    </div>
-    <div class="form-group">
-      <label>Trust Score (0-10)</label>
-      <input type="number" step="0.1" id="trustScore" placeholder="e.g. 9.4" required>
-    </div>
+    <div class="form-group"><label>Firm Name</label><input type="text" id="firmName" placeholder="e.g. The 5ers" required></div>
+    <div class="form-group"><label>Logo URL</label><input type="text" id="logoUrl" placeholder="https://..." required></div>
+    <div class="form-group"><label>Categories (Space separated)</label><input type="text" id="categories" placeholder="forex futures" required></div>
+    <div class="form-group"><label>Trust Score (0-10)</label><input type="number" step="0.1" id="trustScore" placeholder="9.5" required></div>
     
-    <!-- PRICING & DISCOUNTS -->
-    <div class="section-title">Pricing & Affiliation</div>
-    <div class="form-group">
-      <label>Base Price ($100K Account)</label>
-      <input type="number" id="basePrice" placeholder="e.g. 540" required>
-    </div>
-    <div class="form-group">
-      <label>Discounted Price</label>
-      <input type="number" id="discountPrice" placeholder="e.g. 486" required>
-    </div>
-    <div class="form-group">
-      <label>Discount Code</label>
-      <input type="text" id="discountCode" placeholder="e.g. FTMO10" required>
-    </div>
-    <div class="form-group">
-      <label>Affiliate Link</label>
-      <input type="url" id="affiliateLink" placeholder="e.g. https://ftmo.com/en/?aff=123" required>
-    </div>
+    <div class="section-title">Pricing & Discounts</div>
+    <div class="form-group"><label>Base Price ($100K)</label><input type="number" id="basePrice" placeholder="500" required></div>
+    <div class="form-group"><label>Discounted Price</label><input type="number" id="discountPrice" placeholder="450" required></div>
+    <div class="form-group"><label>Discount Code</label><input type="text" id="discountCode" placeholder="NIGHT10" required></div>
+    <div class="form-group"><label>Affiliate Link</label><input type="url" id="affiliateLink" placeholder="https://..." required></div>
 
-    <!-- ENGINE FILTERS -->
-    <div class="section-title">Engine Filters & Platforms</div>
+    <div class="section-title">Algorithm Filters</div>
+    <div class="form-group"><label>Platforms</label><input type="text" id="platforms" placeholder="mt5 dxtrade" required></div>
     <div class="form-group">
-      <label>Platforms (Space separated)</label>
-      <input type="text" id="platforms" placeholder="e.g. mt5 dxtrade ctrader" required>
-    </div>
-    <div class="form-group">
-      <label>Evaluation Phases</label>
-      <select id="phases">
-        <option value="1">1-Step</option>
-        <option value="2" selected>2-Step</option>
-        <option value="instant">Instant Funding</option>
-      </select>
+      <label>Phases</label>
+      <select id="phases"><option value="1">1-Step</option><option value="2">2-Step</option><option value="instant">Instant</option></select>
     </div>
     <div class="form-group">
       <label>Drawdown Type</label>
-      <select id="ddType">
-        <option value="static" selected>Static / Balance Based</option>
-        <option value="trailing">Trailing / Equity Based</option>
-      </select>
+      <select id="ddType"><option value="static">Static</option><option value="trailing">Trailing</option></select>
     </div>
     <div class="form-group">
-      <label>US Traders Allowed?</label>
-      <select id="usAllowed">
-        <option value="false" selected>No</option>
-        <option value="true">Yes</option>
-      </select>
+      <label>US Allowed?</label>
+      <select id="usAllowed"><option value="false">No</option><option value="true">Yes</option></select>
     </div>
 
-    <!-- PASS METRICS -->
-    <div class="section-title">Pass Metrics (Accordion Data)</div>
-    <div class="form-group">
-      <label>Profit Target (Phase 1)</label>
-      <input type="text" id="profitTarget" placeholder="e.g. 10%" required>
-    </div>
-    <div class="form-group">
-      <label>Max Drawdown %</label>
-      <input type="text" id="maxDD" placeholder="e.g. 10%" required>
-    </div>
-    <div class="form-group">
-      <label>Daily Loss Limit %</label>
-      <input type="text" id="dailyLoss" placeholder="e.g. 5%" required>
-    </div>
-    <div class="form-group">
-      <label>Payout Split Ratio (Decimal)</label>
-      <input type="number" step="0.01" id="splitRatio" placeholder="e.g. 0.90 for 90%" required>
-    </div>
-    <div class="form-group">
-      <label>News Trading</label>
-      <select id="newsAllowed">
-        <option value="true" selected>Allowed</option>
-        <option value="false">Restricted</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>EAs / Bots</label>
-      <select id="eaAllowed">
-        <option value="true" selected>Allowed</option>
-        <option value="false">Restricted</option>
-      </select>
-    </div>
+    <div class="section-title">Metrics</div>
+    <div class="form-group"><label>Profit Target</label><input type="text" id="profitTarget" placeholder="8% Phase 1" required></div>
+    <div class="form-group"><label>Max Drawdown</label><input type="text" id="maxDD" placeholder="10%" required></div>
+    <div class="form-group"><label>Daily Loss</label><input type="text" id="dailyLoss" placeholder="5%" required></div>
+    <div class="form-group"><label>Profit Split (Decimal)</label><input type="number" step="0.01" id="splitRatio" placeholder="0.90" required></div>
+    <div class="form-group"><label>News Allowed</label><select id="newsAllowed"><option value="true">Yes</option><option value="false">No</option></select></div>
+    <div class="form-group"><label>EAs Allowed</label><select id="eaAllowed"><option value="true">Yes</option><option value="false">No</option></select></div>
 
-    <button type="submit" class="btn-submit full-width">Deploy to Database</button>
+    <button type="submit" class="btn-submit">Deploy to Matrix</button>
   </form>
 </div>
 
-<!-- FIREBASE V10 SDK MODULE -->
 <script type="module">
-  // 1. IMPORT FIREBASE FUNCTIONS
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
   import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-  // 2. YOUR FIREBASE CONFIG (Yahan apne Firebase console ki details daalni hai)
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
+  // YAHAN APNA FIREBASE WEB CONFIG PASTE KAREIN
+ const firebaseConfig = {
+  apiKey: "AIzaSyBa8Cs7QnPaBBxc9hANEqeBC6KKzLxk168",
+  authDomain: "night-trader-admin.firebaseapp.com",
+  projectId: "night-trader-admin",
+  storageBucket: "night-trader-admin.firebasestorage.app",
+  messagingSenderId: "825633262339",
+  appId: "1:825633262339:web:37ca15e556c01ea53cb736",
+  measurementId: "G-N6YHNXB2P6"
+};
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // 3. FORM SUBMISSION LOGIC
   document.getElementById('addFirmForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = e.target.querySelector('.btn-submit');
-    const notification = document.getElementById('notification');
+    const btn = document.querySelector('.btn-submit');
+    const notif = document.getElementById('notification');
     btn.innerText = "Deploying...";
 
-    // Constructing Data Object
-    const firmData = {
-      name: document.getElementById('firmName').value,
-      logo: document.getElementById('logoUrl').value,
-      categories: document.getElementById('categories').value.toLowerCase(),
-      trustScore: parseFloat(document.getElementById('trustScore').value),
-      basePrice: parseFloat(document.getElementById('basePrice').value),
-      discountPrice: parseFloat(document.getElementById('discountPrice').value),
-      discountCode: document.getElementById('discountCode').value,
-      affiliateLink: document.getElementById('affiliateLink').value,
-      platforms: document.getElementById('platforms').value.toLowerCase(),
-      phases: document.getElementById('phases').value,
-      ddType: document.getElementById('ddType').value,
-      usAllowed: document.getElementById('usAllowed').value,
-      profitTarget: document.getElementById('profitTarget').value,
-      maxDD: document.getElementById('maxDD').value,
-      dailyLoss: document.getElementById('dailyLoss').value,
-      splitRatio: parseFloat(document.getElementById('splitRatio').value),
-      newsAllowed: document.getElementById('newsAllowed').value,
-      eaAllowed: document.getElementById('eaAllowed').value,
-      timestamp: new Date().toISOString()
+    const data = {
+      name: document.getElementById('firmName').value, logo: document.getElementById('logoUrl').value,
+      categories: document.getElementById('categories').value.toLowerCase(), trustScore: parseFloat(document.getElementById('trustScore').value),
+      basePrice: parseFloat(document.getElementById('basePrice').value), discountPrice: parseFloat(document.getElementById('discountPrice').value),
+      discountCode: document.getElementById('discountCode').value, affiliateLink: document.getElementById('affiliateLink').value,
+      platforms: document.getElementById('platforms').value.toLowerCase(), phases: document.getElementById('phases').value,
+      ddType: document.getElementById('ddType').value, usAllowed: document.getElementById('usAllowed').value,
+      profitTarget: document.getElementById('profitTarget').value, maxDD: document.getElementById('maxDD').value,
+      dailyLoss: document.getElementById('dailyLoss').value, splitRatio: parseFloat(document.getElementById('splitRatio').value),
+      newsAllowed: document.getElementById('newsAllowed').value, eaAllowed: document.getElementById('eaAllowed').value,
+      timestamp: Date.now()
     };
 
     try {
-      // Pushing to 'propFirms' collection in Firestore
-      await addDoc(collection(db, "propFirms"), firmData);
-      
-      notification.className = 'notify-success';
-      notification.innerText = `${firmData.name} has been successfully added to the Matrix!`;
-      notification.style.display = 'block';
-      e.target.reset(); // Clear form
+      await addDoc(collection(db, "propFirms"), data);
+      notif.style.display = 'block'; notif.style.background = 'rgba(16, 185, 129, 0.2)'; notif.style.color = '#10B981';
+      notif.innerText = "Successfully Deployed!";
+      e.target.reset();
     } catch (error) {
-      console.error("Error adding document: ", error);
-      notification.className = 'notify-error';
-      notification.innerText = `Error: ${error.message}`;
-      notification.style.display = 'block';
+      notif.style.display = 'block'; notif.style.background = 'rgba(239, 68, 68, 0.2)'; notif.style.color = '#EF4444';
+      notif.innerText = "Error: " + error.message;
     } finally {
-      btn.innerText = "Deploy to Database";
-      setTimeout(() => notification.style.display = 'none', 5000);
+      btn.innerText = "Deploy to Matrix";
+      setTimeout(() => notif.style.display = 'none', 5000);
     }
   });
 </script>
